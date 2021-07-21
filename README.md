@@ -1,117 +1,16 @@
-# Solidity Template
+# Uniswap v3 Liquidity Locker
 
-My favourite setup for writing Solidity smart contracts.
+Securely lock your Uniswap v3 LP NFT for any duration with support for collecting fees and cliff duration.
 
-- [Hardhat](https://github.com/nomiclabs/hardhat): compile and run the smart contracts on a local development network
-- [TypeChain](https://github.com/ethereum-ts/TypeChain): generate TypeScript types for smart contracts
-- [Ethers](https://github.com/ethers-io/ethers.js/): renowned Ethereum library and wallet implementation
-- [Waffle](https://github.com/EthWorks/Waffle): tooling for writing comprehensive smart contract tests
-- [Solhint](https://github.com/protofire/solhint): linter
-- [Solcover](https://github.com/sc-forks/solidity-coverage): code coverage
-- [Prettier Plugin Solidity](https://github.com/prettier-solidity/prettier-plugin-solidity): code formatter
+Some of the key features include
 
-This is a GitHub template, which means you can reuse it as many times as you want. You can do that by clicking the "Use this
-template" button at the top of the page.
+- **Claim Fee While Locked:** Claim LP fee from locked LP token.
+- **Seperate Fee Recipient and Owner Address:** Any address can be configured to receive LP fee. Owner address can also be set to update fee recipient address and remove LP NFT when the duration ends.
+- **Cliff Duration:** Set any duration in which the fees can't be claimed.
+- **Levels of Ownership:** LP token can be configured to be locked for infinite time, allow or disallow fee claim, set differrent owner and fee recipient address, update addresses, configure to allow or disallow updation of addresses ...
 
-## Usage
+## License
 
-### Pre Requisites
+These contracts are released under the [MIT License](LICENSE).
 
-Before running any command, make sure to install dependencies:
-
-```sh
-$ yarn install
-```
-
-### Compile
-
-Compile the smart contracts with Hardhat:
-
-```sh
-$ yarn compile
-```
-
-### TypeChain
-
-Compile the smart contracts and generate TypeChain artifacts:
-
-```sh
-$ yarn typechain
-```
-
-### Lint Solidity
-
-Lint the Solidity code:
-
-```sh
-$ yarn lint:sol
-```
-
-### Lint TypeScript
-
-Lint the TypeScript code:
-
-```sh
-$ yarn lint:ts
-```
-
-### Test
-
-Run the Mocha tests:
-
-```sh
-$ yarn test
-```
-
-### Coverage
-
-Generate the code coverage report:
-
-```sh
-$ yarn coverage
-```
-
-### Report Gas
-
-See the gas usage per unit test and average gas per method call:
-
-```sh
-$ REPORT_GAS=true yarn test
-```
-
-### Clean
-
-Delete the smart contract artifacts, the coverage reports and the Hardhat cache:
-
-```sh
-$ yarn clean
-```
-
-### Deploy
-
-Deploy the contracts to Hardhat Network:
-
-```sh
-$ yarn deploy
-```
-
-Deploy the contracts to a specific network, such as the Ropsten testnet:
-
-```sh
-$ yarn deploy:network ropsten
-```
-
-## Syntax Highlighting
-
-If you use VSCode, you can enjoy syntax highlighting for your Solidity code via the
-[vscode-solidity](https://github.com/juanfranblanco/vscode-solidity) extension. The recommended approach to set the
-compiler version is to add the following fields to your VSCode user settings:
-
-```json
-{
-  "solidity.compileUsingRemoteVersion": "v0.8.4+commit.c7e474f2",
-  "solidity.defaultCompiler": "remote"
-}
-```
-
-Where of course `v0.8.4+commit.c7e474f2` can be replaced with any other version.
+**[Powered by Unipilot](https://unipilot.io)**
