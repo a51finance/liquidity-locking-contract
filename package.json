@@ -85,6 +85,7 @@
     "typechain": "hardhat typechain"
   },
   "dependencies": {
+    "@openzeppelin/contracts": "^4.2.0",
     "@uniswap/v3-periphery": "^1.1.1"
   }
 }
