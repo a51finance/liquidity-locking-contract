@@ -1042,6 +1042,20 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@openzeppelin/contracts@npm:3.4.1-solc-0.7-2":
+  version: 3.4.1-solc-0.7-2
+  resolution: "@openzeppelin/contracts@npm:3.4.1-solc-0.7-2"
+  checksum: 190147d83fac3b9aad9f163de2bb8dbe464cb12ea1e411a88e0fa141bda03e0a21c8b45904c40a6fff343adf8b0c322a185fd31c83107ff02d6b0a3479b30496
+  languageName: node
+  linkType: hard
+
+"@openzeppelin/contracts@npm:^4.2.0":
+  version: 4.2.0
+  resolution: "@openzeppelin/contracts@npm:4.2.0"
+  checksum: 5dee34e72797ec5071a8123db1225ac255570bf47bf28f4c20b651efe1422d6581115e699de4472a4a7c704876b4ccced5f73c9f7bacbea2199c4829d9e92e23
+  languageName: node
+  linkType: hard
+
 "@paulrberg/solidity-template@workspace:.":
   version: 0.0.0-use.local
   resolution: "@paulrberg/solidity-template@workspace:."
@@ -1056,6 +1070,7 @@ __metadata:
     "@ethersproject/providers": ^5.4.0
     "@nomiclabs/hardhat-ethers": ^2.0.2
     "@nomiclabs/hardhat-waffle": ^2.0.1
+    "@openzeppelin/contracts": ^4.2.0
     "@typechain/ethers-v5": ^7.0.1
     "@typechain/hardhat": ^2.1.0
     "@types/chai": ^4.2.19
@@ -1064,6 +1079,7 @@ __metadata:
     "@types/node": ^15.12.5
     "@typescript-eslint/eslint-plugin": ^4.28.1
     "@typescript-eslint/parser": ^4.28.1
+    "@uniswap/v3-periphery": ^1.1.1
     chai: ^4.3.4
     commitizen: ^4.2.4
     cz-conventional-changelog: ^3.3.0
@@ -1753,6 +1769,41 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@uniswap/lib@npm:^4.0.1-alpha":
+  version: 4.0.1-alpha
+  resolution: "@uniswap/lib@npm:4.0.1-alpha"
+  checksum: ce30f7f6dde6d7c955267dc1a631874aaab4df2b591550c334acf70935da8fc27802998e4d585641feac8277c221babd31c16d4038a5c812de4d9f6e969061b4
+  languageName: node
+  linkType: hard
+
+"@uniswap/v2-core@npm:1.0.1":
+  version: 1.0.1
+  resolution: "@uniswap/v2-core@npm:1.0.1"
+  checksum: e3dcbe72500530249b68d2f2c92062f3f21919267123262578a34cac2862edf7eeda8fcdc808a370d109f26e357635b1cf546e35dbd902a18768ac88d9a8fb0f
+  languageName: node
+  linkType: hard
+
+"@uniswap/v3-core@npm:1.0.0":
+  version: 1.0.0
+  resolution: "@uniswap/v3-core@npm:1.0.0"
+  checksum: 594f6fb2959c24e2e98e2db95223d52da6b7a81a1d9e0ae002450c2ce8756972c11c6afd58f9331080248d6582f691e0b320840e59aef586d92165d5bce430d0
+  languageName: node
+  linkType: hard
+
+"@uniswap/v3-periphery@npm:^1.1.1":
+  version: 1.1.1
+  resolution: "@uniswap/v3-periphery@npm:1.1.1"
+  dependencies:
+    "@openzeppelin/contracts": 3.4.1-solc-0.7-2
+    "@uniswap/lib": ^4.0.1-alpha
+    "@uniswap/v2-core": 1.0.1
+    "@uniswap/v3-core": 1.0.0
+    base64-sol: 1.0.1
+    hardhat-watcher: ^2.1.1
+  checksum: 0370bf049afd91f49f613814e8001624cee1f7a14ddd5514d1046758b474dd8e1283a58f67cdf17e930c84ebf24c1724bb9f7bdc1997e8ef438e538e03637ab9
+  languageName: node
+  linkType: hard
+
 "@yarnpkg/lockfile@npm:^1.1.0":
   version: 1.1.0
   resolution: "@yarnpkg/lockfile@npm:1.1.0"
@@ -2089,7 +2140,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"anymatch@npm:~3.1.1":
+"anymatch@npm:~3.1.1, anymatch@npm:~3.1.2":
   version: 3.1.2
   resolution: "anymatch@npm:3.1.2"
   dependencies:
@@ -3029,6 +3080,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"base64-sol@npm:1.0.1":
+  version: 1.0.1
+  resolution: "base64-sol@npm:1.0.1"
+  checksum: 82a774b228a1659b8494cb855aadd4e93baa86ad383a5d83104c9c0012ccb1722ae2254b7b71a7883d1989ffcdc6b6e245429dde11a942dfcc3e48a18beff87e
+  languageName: node
+  linkType: hard
+
 "base@npm:^0.11.1":
   version: 0.11.2
   resolution: "base@npm:0.11.2"
@@ -3668,6 +3726,25 @@ __metadata:
     fsevents:
       optional: true
   checksum: 61b3f710f9e7dc69d76f638d8b0d37bad586497444165125ca8062f7192695f35403b5f622cbd7dfdd06805201ceaba40ff90e53ea2974df9a8087861192a99b
+  languageName: node
+  linkType: hard
+
+"chokidar@npm:^3.4.3":
+  version: 3.5.2
+  resolution: "chokidar@npm:3.5.2"
+  dependencies:
+    anymatch: ~3.1.2
+    braces: ~3.0.2
+    fsevents: ~2.3.2
+    glob-parent: ~5.1.2
+    is-binary-path: ~2.1.0
+    is-glob: ~4.0.1
+    normalize-path: ~3.0.0
+    readdirp: ~3.6.0
+  dependenciesMeta:
+    fsevents:
+      optional: true
+  checksum: 52fbff3acebf06ec0125872110f6c8403e66cd3d613264c83405496e199554d99380342d9b3a7ffd7910c53c5865e242ed7dd72fcb2e883d8e3ad3f3883aee6c
   languageName: node
   linkType: hard
 
@@ -6656,7 +6733,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"fsevents@patch:fsevents@~2.3.1#builtin<compat/fsevents>":
+"fsevents@patch:fsevents@~2.3.1#builtin<compat/fsevents>, fsevents@patch:fsevents@~2.3.2#builtin<compat/fsevents>":
   version: 2.3.2
   resolution: "fsevents@patch:fsevents@npm%3A2.3.2#builtin<compat/fsevents>::version=2.3.2&hash=11e9ea"
   dependencies:
@@ -6674,7 +6751,7 @@ fsevents@~2.1.1:
   languageName: node
   linkType: hard
 
-fsevents@~2.3.1:
+"fsevents@~2.3.1, fsevents@~2.3.2":
   version: 2.3.2
   resolution: "fsevents@npm:2.3.2"
   dependencies:
@@ -6890,7 +6967,7 @@ fsevents@~2.3.1:
   languageName: node
   linkType: hard
 
-"glob-parent@npm:^5.1.0, glob-parent@npm:^5.1.2, glob-parent@npm:~5.1.0":
+"glob-parent@npm:^5.1.0, glob-parent@npm:^5.1.2, glob-parent@npm:~5.1.0, glob-parent@npm:~5.1.2":
   version: 5.1.2
   resolution: "glob-parent@npm:5.1.2"
   dependencies:
@@ -7185,6 +7262,17 @@ fsevents@~2.3.1:
   peerDependencies:
     hardhat: ^2.0.2
   checksum: 0273e454b260a9447b35d2f93910d916ca64b30ffc32d200d5830ea9b2c6afb52ac8844ba5ee598fd14abacd2ee5871eee04a579f95050e155dafa768d94886e
+  languageName: node
+  linkType: hard
+
+"hardhat-watcher@npm:^2.1.1":
+  version: 2.1.1
+  resolution: "hardhat-watcher@npm:2.1.1"
+  dependencies:
+    chokidar: ^3.4.3
+  peerDependencies:
+    hardhat: ^2.0.0
+  checksum: bba8984f74fb759335c85fca3f76a744d38d8cba087b71cb1e7f8410e72136915ba47b18aaf7e1dac42687c90c5f8f386bac3efd1a96f332175d5a9930e02184
   languageName: node
   linkType: hard
 
@@ -11447,6 +11535,15 @@ fsevents@~2.3.1:
   dependencies:
     picomatch: ^2.2.1
   checksum: a64fe5606937d9655252230003362d95da05dbfd3baecedb4bb8c1bc0df497d051a192f9b75345c944e58a0b362c68349be602d6dbf05d03770e510b35a9f80f
+  languageName: node
+  linkType: hard
+
+"readdirp@npm:~3.6.0":
+  version: 3.6.0
+  resolution: "readdirp@npm:3.6.0"
+  dependencies:
+    picomatch: ^2.2.1
+  checksum: 7da2fe8d5abf17ae0bf97a052718e16d29fa185f3e461153035728d93642326ae8e44c17b9a9b3a5fa616dff160e96be3184e0323efaac7211f80c0aab5f622b
   languageName: node
   linkType: hard
 
