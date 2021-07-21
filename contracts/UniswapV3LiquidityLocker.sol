@@ -12,6 +12,10 @@ contract UniswapV3LiquidityLocker {
     INonfungiblePositionManager private _uniswapNFPositionManager;
     uint128 private constant MAX_UINT128 = type(uint128).max;
 
+    event PositionUpdated(Position.Info position);
+    event FeeClaimed(uint256 tokenId);
+    event TokenUnlocked(uint256 tokenId);
+
     constructor() {
         _uniswapNFPositionManager = INonfungiblePositionManager(0xC36442b4a4522E871399CD717aBDD847Ab11FE88);
     }
@@ -22,6 +26,8 @@ contract UniswapV3LiquidityLocker {
         params.isPositionValid();
 
         lockedLiquidityPositions[params.tokenId] = params;
+
+        emit PositionUpdated(params);
     }
 
     function claimLPFee(uint256 tokenId) external returns (uint256 amount0, uint256 amount1) {
@@ -30,45 +36,56 @@ contract UniswapV3LiquidityLocker {
         llPosition.isTokenIdValid(tokenId);
         llPosition.isFeeClaimAllowed();
 
-        return
-            _uniswapNFPositionManager.collect(
-                INonfungiblePositionManager.CollectParams(tokenId, llPosition.feeReciever, MAX_UINT128, MAX_UINT128)
-            );
+        (amount0, amount1) = _uniswapNFPositionManager.collect(
+            INonfungiblePositionManager.CollectParams(tokenId, llPosition.feeReciever, MAX_UINT128, MAX_UINT128)
+        );
+
+        emit FeeClaimed(tokenId);
     }
 
     function updateOwner(uint256 tokenId, address owner) external {
         Position.Info storage llPosition = lockedLiquidityPositions[tokenId];
 
         llPosition.isTokenIdValid(tokenId);
-        llPosition.isOnwer();
+        llPosition.isOwner();
 
         llPosition.owner = owner;
+
+        emit PositionUpdated(llPosition);
     }
 
     function updateFeeReciever(uint256 tokenId, address feeReciever) external {
         Position.Info storage llPosition = lockedLiquidityPositions[tokenId];
 
         llPosition.isTokenIdValid(tokenId);
-        llPosition.isOnwer();
+        llPosition.isOwner();
 
         llPosition.feeReciever = feeReciever;
+
+        emit PositionUpdated(llPosition);
     }
 
     function renounceBeneficiaryUpdate(uint256 tokenId) external {
         Position.Info storage llPosition = lockedLiquidityPositions[tokenId];
 
         llPosition.isTokenIdValid(tokenId);
-        llPosition.isOnwer();
+        llPosition.isOwner();
 
         llPosition.allowBeneficiaryUpdate = false;
+
+        emit PositionUpdated(llPosition);
     }
 
-    function removeToken(uint256 tokenId) external {
-        Position.Info storage llPosition = lockedLiquidityPositions[tokenId];
+    function unlockToken(uint256 tokenId) external {
+        Position.Info memory llPosition = lockedLiquidityPositions[tokenId];
 
         llPosition.isTokenIdValid(tokenId);
         llPosition.isTokenUnlocked();
 
         _uniswapNFPositionManager.transferFrom(address(this), llPosition.owner, tokenId);
+
+        delete lockedLiquidityPositions[tokenId];
+
+        emit TokenUnlocked(tokenId);
     }
 }

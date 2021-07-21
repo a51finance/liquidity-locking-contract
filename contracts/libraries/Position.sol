@@ -27,7 +27,7 @@ library Position {
         require((self.start + self.duration) > block.timestamp, "ULL::INVALID_ENDING_TIME");
     }
 
-    function isOnwer(Info memory self) internal view {
+    function isOwner(Info memory self) internal view {
         require(self.owner == msg.sender && self.allowBeneficiaryUpdate, "ULL::NOT_AUTHORIZED");
     }
 
