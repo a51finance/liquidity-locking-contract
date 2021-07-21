@@ -9,15 +9,15 @@ contract UniswapV3LiquidityLocker {
 
     mapping(uint256 => Position.Info) public lockedLiquidityPositions;
 
-    INonfungiblePositionManager private uniswapNFPositionManager;
+    INonfungiblePositionManager private _uniswapNFPositionManager;
     uint128 private constant MAX_UINT128 = type(uint128).max;
 
     constructor() {
-        uniswapNFPositionManager = INonfungiblePositionManager(0xC36442b4a4522E871399CD717aBDD847Ab11FE88);
+        _uniswapNFPositionManager = INonfungiblePositionManager(0xC36442b4a4522E871399CD717aBDD847Ab11FE88);
     }
 
     function lockLPToken(Position.Info calldata params) external {
-        uniswapNFPositionManager.transferFrom(msg.sender, address(this), params.tokenId);
+        _uniswapNFPositionManager.transferFrom(msg.sender, address(this), params.tokenId);
 
         params.isPositionValid();
 
@@ -31,7 +31,7 @@ contract UniswapV3LiquidityLocker {
         llPosition.isFeeClaimAllowed();
 
         return
-            uniswapNFPositionManager.collect(
+            _uniswapNFPositionManager.collect(
                 INonfungiblePositionManager.CollectParams(tokenId, llPosition.feeReciever, MAX_UINT128, MAX_UINT128)
             );
     }
@@ -54,12 +54,21 @@ contract UniswapV3LiquidityLocker {
         llPosition.feeReciever = feeReciever;
     }
 
+    function renounceBeneficiaryUpdate(uint256 tokenId) external {
+        Position.Info storage llPosition = lockedLiquidityPositions[tokenId];
+
+        llPosition.isTokenIdValid(tokenId);
+        llPosition.isOnwer();
+
+        llPosition.allowBeneficiaryUpdate = false;
+    }
+
     function removeToken(uint256 tokenId) external {
         Position.Info storage llPosition = lockedLiquidityPositions[tokenId];
 
         llPosition.isTokenIdValid(tokenId);
         llPosition.isTokenUnlocked();
 
-        uniswapNFPositionManager.transferFrom(address(this), llPosition.owner, tokenId);
+        _uniswapNFPositionManager.transferFrom(address(this), llPosition.owner, tokenId);
     }
 }
