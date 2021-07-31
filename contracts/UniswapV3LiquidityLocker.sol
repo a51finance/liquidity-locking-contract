@@ -7,13 +7,16 @@ import "./libraries/Position.sol";
 contract UniswapV3LiquidityLocker {
     using Position for Position.Info;
 
+    uint128 private constant MAX_UINT128 = type(uint128).max;
+
     mapping(uint256 => Position.Info) public lockedLiquidityPositions;
 
     INonfungiblePositionManager private _uniswapNFPositionManager;
-    uint128 private constant MAX_UINT128 = type(uint128).max;
 
     event PositionUpdated(Position.Info position);
+
     event FeeClaimed(uint256 tokenId);
+
     event TokenUnlocked(uint256 tokenId);
 
     constructor() {
@@ -34,6 +37,7 @@ contract UniswapV3LiquidityLocker {
         Position.Info memory llPosition = lockedLiquidityPositions[tokenId];
 
         llPosition.isTokenIdValid(tokenId);
+
         llPosition.isFeeClaimAllowed();
 
         (amount0, amount1) = _uniswapNFPositionManager.collect(
@@ -43,10 +47,11 @@ contract UniswapV3LiquidityLocker {
         emit FeeClaimed(tokenId);
     }
 
-    function updateOwner(uint256 tokenId, address owner) external {
+    function updateOwner(address owner, uint256 tokenId) external {
         Position.Info storage llPosition = lockedLiquidityPositions[tokenId];
 
         llPosition.isTokenIdValid(tokenId);
+
         llPosition.isOwner();
 
         llPosition.owner = owner;
@@ -54,10 +59,11 @@ contract UniswapV3LiquidityLocker {
         emit PositionUpdated(llPosition);
     }
 
-    function updateFeeReciever(uint256 tokenId, address feeReciever) external {
+    function updateFeeReciever(address feeReciever, uint256 tokenId) external {
         Position.Info storage llPosition = lockedLiquidityPositions[tokenId];
 
         llPosition.isTokenIdValid(tokenId);
+
         llPosition.isOwner();
 
         llPosition.feeReciever = feeReciever;
@@ -69,6 +75,7 @@ contract UniswapV3LiquidityLocker {
         Position.Info storage llPosition = lockedLiquidityPositions[tokenId];
 
         llPosition.isTokenIdValid(tokenId);
+
         llPosition.isOwner();
 
         llPosition.allowBeneficiaryUpdate = false;
@@ -80,6 +87,7 @@ contract UniswapV3LiquidityLocker {
         Position.Info memory llPosition = lockedLiquidityPositions[tokenId];
 
         llPosition.isTokenIdValid(tokenId);
+
         llPosition.isTokenUnlocked();
 
         _uniswapNFPositionManager.transferFrom(address(this), llPosition.owner, tokenId);
