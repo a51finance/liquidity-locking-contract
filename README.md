@@ -1,6 +1,6 @@
-# Uniswap v3 Liquidity Locker
+# Concentrated AMM Liquidity Locker
 
-Securely lock your Uniswap v3 LP NFT for any duration with support for collecting fees and cliff duration.
+Securely lock your AMM V3 LP NFT for any duration with support for collecting fees and cliff duration.
 
 Some of the key features include
 
@@ -13,4 +13,4 @@ Some of the key features include
 
 These contracts are released under the [MIT License](LICENSE).
 
-**[Powered by Unipilot](https://unipilot.io)**
+**[Powered by A51-Finance](https://a51.finance)**
