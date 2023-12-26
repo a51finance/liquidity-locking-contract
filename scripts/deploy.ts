@@ -4,13 +4,12 @@
 import hre from "hardhat";
 import { ethers } from "hardhat";
 
-import { QuickswapV3LiquidityLocker, QuickswapV3LiquidityLocker__factory } from "../typechain";
+import { A51LiquidityLocker, A51LiquidityLocker__factory } from "../typechain";
 
 async function main(): Promise<void> {
-  const LiquidityLocker: QuickswapV3LiquidityLocker__factory = await ethers.getContractFactory(
-    "QuickswapV3LiquidityLocker",
-  );
-  const liquidityLocker: QuickswapV3LiquidityLocker = await LiquidityLocker.deploy();
+  const LiquidityLocker: A51LiquidityLocker__factory = await ethers.getContractFactory("A51LiquidityLocker");
+
+  const liquidityLocker: A51LiquidityLocker = await LiquidityLocker.deploy();
   await liquidityLocker.deployed();
 
   console.log("Quickswap liquidity locker deployed to: ", liquidityLocker.address);

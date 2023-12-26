@@ -5,7 +5,7 @@ pragma abicoder v2;
 import "./libraries/Position.sol";
 import "@cryptoalgebra/periphery/contracts/interfaces/INonfungiblePositionManager.sol";
 
-contract QuickswapV3LiquidityLocker {
+contract A51LiquidityLocker {
     using Position for Position.Info;
 
     mapping(uint256 => Position.Info) public lockedLiquidityPositions;
