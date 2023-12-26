@@ -1,16 +1,30 @@
 // We require the Hardhat Runtime Environment explicitly here. This is optional but useful for running the
 // script in a standalone fashion through `node <script>`. When running the script with `hardhat run <script>`,
 // you'll find the Hardhat Runtime Environment's members available in the global scope.
+import hre from "hardhat";
 import { ethers } from "hardhat";
 
-import { Greeter, Greeter__factory } from "../typechain";
+import { QuickswapV3LiquidityLocker, QuickswapV3LiquidityLocker__factory } from "../typechain";
 
 async function main(): Promise<void> {
-  const Greeter: Greeter__factory = await ethers.getContractFactory("Greeter");
-  const greeter: Greeter = await Greeter.deploy("Hello, Hardhat!");
-  await greeter.deployed();
+  const LiquidityLocker: QuickswapV3LiquidityLocker__factory = await ethers.getContractFactory(
+    "QuickswapV3LiquidityLocker",
+  );
+  const liquidityLocker: QuickswapV3LiquidityLocker = await LiquidityLocker.deploy();
+  await liquidityLocker.deployed();
 
-  console.log("Greeter deployed to: ", greeter.address);
+  console.log("Quickswap liquidity locker deployed to: ", liquidityLocker.address);
+
+  delay(60000);
+
+  await hre.run("verify:verify", {
+    address: liquidityLocker.address,
+    constructorArguments: [],
+  });
+}
+
+function delay(ms: number) {
+  return new Promise(resolve => setTimeout(resolve, ms));
 }
 
 // We recommend this pattern to be able to use async/await everywhere and properly handle errors.

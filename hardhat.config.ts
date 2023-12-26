@@ -6,6 +6,8 @@ import "solidity-coverage";
 import "./tasks/accounts";
 import "./tasks/clean";
 
+import "@nomiclabs/hardhat-etherscan";
+
 import { resolve } from "path";
 
 import { config as dotenvConfig } from "dotenv";
@@ -22,7 +24,11 @@ const chainIds = {
   mainnet: 1,
   rinkeby: 4,
   ropsten: 3,
+  mumbai: 80001,
+  polygon: 137,
 };
+
+const etherscanApiKey = process.env.ETHERSCAN_API_KEY;
 
 // Ensure that we have all the environment variables we need.
 const mnemonic = process.env.MNEMONIC;
@@ -36,7 +42,7 @@ if (!infuraApiKey) {
 }
 
 function createTestnetConfig(network: keyof typeof chainIds): NetworkUserConfig {
-  const url: string = "https://" + network + ".infura.io/v3/" + infuraApiKey;
+  const url: string = "https://polygon-mumbai.infura.io/v3/" + infuraApiKey;
   return {
     accounts: {
       count: 10,
@@ -68,6 +74,8 @@ const config: HardhatUserConfig = {
     kovan: createTestnetConfig("kovan"),
     rinkeby: createTestnetConfig("rinkeby"),
     ropsten: createTestnetConfig("ropsten"),
+    mumbai: createTestnetConfig("mumbai"),
+    polygon: createTestnetConfig("polygon"),
   },
   paths: {
     artifacts: "./artifacts",
@@ -76,7 +84,7 @@ const config: HardhatUserConfig = {
     tests: "./test",
   },
   solidity: {
-    version: "0.8.6",
+    version: "0.7.6",
     settings: {
       metadata: {
         // Not including the metadata hash
@@ -94,6 +102,12 @@ const config: HardhatUserConfig = {
   typechain: {
     outDir: "typechain",
     target: "ethers-v5",
+  },
+
+  etherscan: {
+    // Your API key for Etherscan
+    // Obtain one at https://etherscan.io/
+    apiKey: etherscanApiKey,
   },
 };
 

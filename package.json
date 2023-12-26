@@ -1,10 +1,10 @@
 {
-  "name": "@paulrberg/solidity-template",
-  "description": "Setup for writing Solidity smart contracts",
+  "name": "liquidity-locking-contract",
+  "description": "Securely lock V3 LP NFT",
   "version": "1.0.0",
   "author": {
-    "name": "Paul Razvan Berg",
-    "url": "https://paulrberg.com"
+    "name": "A51 Finance",
+    "url": "https://a51.finance"
   },
   "devDependencies": {
     "@codechecks/client": "^0.1.10",
@@ -85,7 +85,10 @@
     "typechain": "hardhat typechain"
   },
   "dependencies": {
-    "@openzeppelin/contracts": "^4.2.0",
+    "@cryptoalgebra/periphery": "1.0.0",
+    "@nomicfoundation/hardhat-verify": "^2.0.3",
+    "@nomiclabs/hardhat-etherscan": "^3.1.8",
+    "@openzeppelin/contracts": "3.4.1",
     "@uniswap/v3-periphery": "^1.1.1"
   }
 }
