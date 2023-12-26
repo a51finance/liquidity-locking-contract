@@ -1,27 +1,28 @@
 // SPDX-License-Identifier: MIT
-pragma solidity >=0.8.4;
+pragma solidity =0.7.6;
+pragma abicoder v2;
 
-import "./interfaces/INonfungiblePositionManager.sol";
 import "./libraries/Position.sol";
+import "@cryptoalgebra/periphery/contracts/interfaces/INonfungiblePositionManager.sol";
 
-contract UniswapV3LiquidityLocker {
+contract QuickswapV3LiquidityLocker {
     using Position for Position.Info;
 
     mapping(uint256 => Position.Info) public lockedLiquidityPositions;
 
-    INonfungiblePositionManager private _uniswapNFPositionManager;
+    INonfungiblePositionManager private _positionManager;
     uint128 private constant MAX_UINT128 = type(uint128).max;
 
-    event PositionUpdated(Position.Info position);
-    event FeeClaimed(uint256 tokenId);
     event TokenUnlocked(uint256 tokenId);
+    event PositionUpdated(Position.Info position);
+    event FeeClaimed(uint256 tokenId, uint256 fee0, uint256 fee1);
 
     constructor() {
-        _uniswapNFPositionManager = INonfungiblePositionManager(0xC36442b4a4522E871399CD717aBDD847Ab11FE88);
+        _positionManager = INonfungiblePositionManager(0x8eF88E4c7CfbbaC1C163f7eddd4B578792201de6);
     }
 
     function lockLPToken(Position.Info calldata params) external {
-        _uniswapNFPositionManager.transferFrom(msg.sender, address(this), params.tokenId);
+        _positionManager.transferFrom(msg.sender, address(this), params.tokenId);
 
         params.isPositionValid();
 
@@ -36,11 +37,11 @@ contract UniswapV3LiquidityLocker {
         llPosition.isTokenIdValid(tokenId);
         llPosition.isFeeClaimAllowed();
 
-        (amount0, amount1) = _uniswapNFPositionManager.collect(
+        (amount0, amount1) = _positionManager.collect(
             INonfungiblePositionManager.CollectParams(tokenId, llPosition.feeReciever, MAX_UINT128, MAX_UINT128)
         );
 
-        emit FeeClaimed(tokenId);
+        emit FeeClaimed(tokenId, amount0, amount1);
     }
 
     function updateOwner(uint256 tokenId, address owner) external {
@@ -82,7 +83,7 @@ contract UniswapV3LiquidityLocker {
         llPosition.isTokenIdValid(tokenId);
         llPosition.isTokenUnlocked();
 
-        _uniswapNFPositionManager.transferFrom(address(this), llPosition.owner, tokenId);
+        _positionManager.transferFrom(address(this), llPosition.owner, tokenId);
 
         delete lockedLiquidityPositions[tokenId];
 
